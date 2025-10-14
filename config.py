@@ -13,6 +13,7 @@ APP_URL = os.environ.get("APP_URL")
 # Это значение (ID админа) можно оставить в коде
 ADMIN_ID = 2051322188
 
-# Проверка на наличие критически важных переменных
-if BOT_TOKEN is None or APP_URL is None:
-    raise EnvironmentError("BOT_TOKEN или APP_URL не найдены в переменных окружения.")
+# Проверка на наличие только токена
+if BOT_TOKEN is None:
+    raise EnvironmentError("BOT_TOKEN не найден в переменных окружения.")
+# APP_URL может быть пустым при первом развертывании
