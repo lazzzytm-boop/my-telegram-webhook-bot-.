@@ -10,7 +10,12 @@ from config import BOT_TOKEN, APP_URL  # <--- Добавили импорт APP_
 from handlers.client import router as client_router
 from handlers.admin import router as admin_router
 from database.db import DataBase
+# # 2. Создание веб-приложения для приёма POST-запросов от Telegram
+app = web.Application()  # ⬅️ Теперь Gunicorn его видит!
 
+def main(async_loop: asyncio.AbstractEventLoop):
+    # ... (здесь остальной код, который был в main)
+    pass
 
 logger = logging.getLogger(__name__)
 
@@ -44,8 +49,7 @@ async def main():
     # 1. Регистрация функции установки Webhook
     dp.startup.register(on_startup) 
 
-    # 2. Создание веб-приложения для приема POST-запросов от Telegram
-    app = web.Application()
+
     
     # 3. Маршрут, который будет принимать все обновления от Telegram
     app.router.add_post("/webhook", dp.web_handler) 
@@ -66,4 +70,5 @@ if __name__ == '__main__':
     try:
         asyncio.run(main())
     except KeyboardInterrupt:
+
         logger.warning("Bot stopped by KeyboardInterrupt")
