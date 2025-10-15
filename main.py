@@ -48,27 +48,11 @@ async def main():
     
     # 1. Регистрация функции установки Webhook
     dp.startup.register(on_startup) 
-
-
-    
-    # 3. Маршрут, который будет принимать все обновления от Telegram
-    app.router.add_post("/webhook", dp.web_handler) 
-    
-    # 4. Запуск веб-сервера
-    runner = web.AppRunner(app)
-    await runner.setup()
-    site = web.TCPSite(runner, host=WEB_SERVER_HOST, port=WEB_SERVER_PORT)
-    
-    await bot.delete_webhook(drop_pending_updates=True) # Очистка старых ве
-    await site.start() 
-
-    # Бот будет работать, пока сервер работает.
-    await asyncio.Future() 
-
-
+     
 if __name__ == '__main__':
     try:
         asyncio.run(main())
     except KeyboardInterrupt:
 
         logger.warning("Bot stopped by KeyboardInterrupt")
+
