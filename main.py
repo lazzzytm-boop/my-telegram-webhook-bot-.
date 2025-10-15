@@ -53,6 +53,27 @@ if __name__ == '__main__':
     try:
         asyncio.run(main())
     except KeyboardInterrupt:
+# # 4. Запуск веб-сервера
+runner = web.AppRunner(app)
+await runner.setup()
+# *** ОБЯЗАТЕЛЬНО: указываем порт 8080 ***
+site = web.TCPSite(runner, host='0.0.0.0', port=8080) 
+await site.start() 
 
+await bot.delete_webhook(drop_pending_updates=True) # Очистка старых ве
+await site.start()
+
+# Бот будет работать, пока работает сервер.
+await asyncio.Future()
+
+# ...
+
+if __name__ == '__main__':
+    try:
+        asyncio.run(main())
+    except KeyboardInterrupt:
+        # ... (Ваша логика остановки)
+        pass
         logger.warning("Bot stopped by KeyboardInterrupt")
+
 
