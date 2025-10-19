@@ -1,7 +1,7 @@
 import asyncio
 import logging
 import os
-from aiohttp import web
+from aiohttp import web # Обязательно для web.Application
 
 from aiogram import Dispatcher, Bot
 from aiogram.enums import ParseMode
@@ -37,7 +37,10 @@ async def main():
         format=f'[BOT] {u"%(filename)s:%(lineno)d #%(levelname)-8s [%(asctime)s] - %(name)s - %(message)s"}')
     
     logger.info("Starting bot in Webhook mode...")
-
+ # # Инициализация (ДОБАВИТЬ ЭТО)
+    dp = Dispatcher(bot)
+    bot = Bot(BOT_TOKEN, parse_mode=ParseMode.HTML)
+   app = web.Application() # <- Создание веб-приложения AIOHTTP                                                                                                                                                          
     # Инициализация
     dp = Dispatcher()
     bot = Bot(BOT_TOKEN, parse_mode=ParseMode.HTML)
@@ -48,7 +51,8 @@ async def main():
     
     # 1. Регистрация функции установки Webhook
     dp.startup.register(on_startup) 
-     
+      # Хэндлер, который будет принимать обновления (ЭТО НУЖНО ДОБАВИТЬ)
+    app.router.add_post(f'/{BOT_TOKEN}', dp.web_handler) 
 if __name__ == '__main__':
     try:
         asyncio.run(main())
@@ -60,11 +64,9 @@ await runner.setup()
 site = web.TCPSite(runner, host='0.0.0.0', port=8080) 
 await site.start() 
 
-await bot.delete_webhook(drop_pending_updates=True) # Очистка старых ве
-await site.start()
 
-# Бот будет работать, пока работает сервер.
-await asyncio.Future()
+
+
 
 # ...
 
@@ -75,6 +77,7 @@ if __name__ == '__main__':
         
         pass
         logger.warning("Bot stopped by KeyboardInterrupt")
+
 
 
 
