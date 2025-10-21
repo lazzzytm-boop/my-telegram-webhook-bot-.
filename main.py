@@ -49,10 +49,10 @@ bot = Bot(BOT_TOKEN, parse_mode=ParseMode.HTML)
 dp.include_routers(client_router, admin_router)
 dp.startup.register(DataBase.on_startup)
     
-    # 1. Регистрация функции установки Webhook
-    dp.startup.register(on_startup) 
-      # Хэндлер, который будет принимать обновления (ЭТО НУЖНО ДОБАВИТЬ)
-    app.router.add_post(f'/{BOT_TOKEN}', dp.web_handler) 
+# 1. Регистрация функции установки Webhook
+dp.startup.register(on_startup) 
+# Хэндлер, который будет принимать обновления (ЭТО НУЖНО ДОБАВИТЬ)
+app.router.add_post(f'/{BOT_TOKEN}', dp.web_handler) 
 if __name__ == '__main__':
     try:
         asyncio.run(main())
@@ -64,13 +64,8 @@ await runner.setup()
 site = web.TCPSite(runner, host='0.0.0.0', port=8080) 
 await site.start() 
 
-if __name__ == '__main__':
-    try:
-        asyncio.run(main())
-    except KeyboardInterrupt:
-        
-        pass
-        logger.warning("Bot stopped by KeyboardInterrupt")
+
+
 
 
 
