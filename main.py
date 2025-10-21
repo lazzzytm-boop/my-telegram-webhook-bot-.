@@ -51,8 +51,8 @@ async def main():
     dp.startup.register(on_startup) 
     # Хэндлер, который будет принимать обновления (ЭТО НУЖНО ДОБАВИТЬ)
     app.router.add_post(f'/{BOT_TOKEN}', dp.web_handler) 
-    await bot.delete_webhook(drop_pending_updates=True) # <-- ОЧИСТКА WEBHOOK
     runner = web.AppRunner(app)
+    await bot.delete_webhook(drop_pending_updates=True) # <-- ОЧИСТКА WEBHOOK
     await runner.setup()
     # *** ОБЯЗАТЕЛЬНО: указываем порт 8080 ***
     site = web.TCPSite(runner, host='0.0.0.0', port=8080) 
@@ -64,6 +64,7 @@ if __name__ == '__main__':
         asyncio.run(main())
     except KeyboardInterrupt:
         pass # Или logger.warning("...")
+
 
 
 
