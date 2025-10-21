@@ -38,16 +38,16 @@ async def main():
     
     logger.info("Starting bot in Webhook mode...")
  # # Инициализация (ДОБАВИТЬ ЭТО)
-    dp = Dispatcher(bot)
-    bot = Bot(BOT_TOKEN, parse_mode=ParseMode.HTML)
-   app = web.Application() # <- Создание веб-приложения AIOHTTP                                                                                                                                                          
-    # Инициализация
-    dp = Dispatcher()
-    bot = Bot(BOT_TOKEN, parse_mode=ParseMode.HTML)
-    
-    # Регистрация роутеров и базы данных (как было)
-    dp.include_routers(client_router, admin_router)
-    dp.startup.register(DataBase.on_startup)
+dp = Dispatcher(bot)
+bot = Bot(BOT_TOKEN, parse_mode=ParseMode.HTML)
+app = web.Application() # <- Создание веб-приложения AIOHTTP                                                                                                                                                          
+# Инициализация
+dp = Dispatcher()
+bot = Bot(BOT_TOKEN, parse_mode=ParseMode.HTML)
+
+# Регистрация роутеров и базы данных (как было)
+dp.include_routers(client_router, admin_router)
+dp.startup.register(DataBase.on_startup)
     
     # 1. Регистрация функции установки Webhook
     dp.startup.register(on_startup) 
@@ -64,12 +64,6 @@ await runner.setup()
 site = web.TCPSite(runner, host='0.0.0.0', port=8080) 
 await site.start() 
 
-
-
-
-
-# ...
-
 if __name__ == '__main__':
     try:
         asyncio.run(main())
@@ -77,6 +71,7 @@ if __name__ == '__main__':
         
         pass
         logger.warning("Bot stopped by KeyboardInterrupt")
+
 
 
 
