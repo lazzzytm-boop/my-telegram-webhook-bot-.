@@ -38,8 +38,8 @@ async def main():
     
     logger.info("Starting bot in Webhook mode...")
      # Инициализация
-    bot = Bot(BOT_TOKEN, parse_mode=ParseMode.HTML)
-    dp = Dispatcher()
+    bot = Bot(BOT_TOKEN)
+    dp = Dispatcher(bot)
     dp.set_parse_mode(ParseMode.HTML)
     app = web.Application() # <- Создание веб-приложения AIOHTTP                                                                                                                                                          
 
@@ -65,6 +65,7 @@ if __name__ == '__main__':
         asyncio.run(main())
     except KeyboardInterrupt:
         pass # Или logger.warning("...")
+
 
 
 
