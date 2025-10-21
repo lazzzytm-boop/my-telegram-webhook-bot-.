@@ -31,37 +31,42 @@ async def on_startup(bot: Bot):
     )
     logger.info(f"Webhook set to: {APP_URL}/webhook")
 
-async def main(): 
+async def main(): # <--- НАЧАЛО ФУНКЦИИ (БЕЗ ОТСТУПА)
+    
+    # ... (логирование, которое у вас было)
+    # logging.basicConfig(...) 
+    # logger.info("Starting bot in Webhook mode...") 
 
-    # 1. Инициализация
-    bot = Bot(BOT_TOKEN) 
-    dp = Dispatcher() # <--- Обход TypeError
+    # 41 # 1. Инициализация (ДОЛЖНА ИМЕТЬ ОДИНАКОВЫЙ ОТСТУП)
+    bot = Bot(BOT_TOKEN) # <--- УДАЛИЛИ parse_mode=ParseMode.HTML
+    dp = Dispatcher() # <--- Используем Dispatcher() для обхода TypeError
     app = web.Application()
 
-    # 2. Регистрация роутеров
+    # 46 # 2. Регистрация роутеров и Webhook
     dp.include_routers(client_router, admin_router)
     dp.startup.register(Database.on_startup)
     dp.startup.register(on_startup) 
 
-    # 3. Настройка Webhook
-    app.router.add_post(f'/{BOT_TOKEN}', dp.get_updates_handler()) # <--- Обход AttributeError
+    # 53 # Настройка Webhook-хендлера и очистка
+    app.router.add_post(f'/{BOT_TOKEN}', dp.get_updates_handler()) # <--- Используем get_updates_handler
+    
     await bot.delete_webhook(drop_pending_updates=True) # <--- Очистка Webhook
-
-    # 4. Запуск веб-сервера
+    
+    # 58 # 3. Запуск веб-сервера
     runner = web.AppRunner(app)
     await runner.setup()
     
-    site = web.TCPSite(runner, host='0.0.0.0', port=8080)
+    site = web.TCPSite(runner, host='0.0.0.0', port=8080) # Порт 8080
     await site.start()
     await asyncio.Future()
 
-# СИНХРОННЫЙ БЛОК ЗАПУСКА (БЕЗ ОТСТУПА)
+# 66 # СИНХРОННЫЙ БЛОК ЗАПУСКА (ОБЯЗАТЕЛЬНО БЕЗ ОТСТУПА)
 if __name__ == '__main__':
     try:
         asyncio.run(main())
     except KeyboardInterrupt:
         pass
-                                                                                                                                              # Или logger.warning("...")
+    # ... (или ваш logger.warning)
 
 
 
