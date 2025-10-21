@@ -52,19 +52,22 @@ dp.startup.register(DataBase.on_startup)
 # 1. Регистрация функции установки Webhook
 dp.startup.register(on_startup) 
 # Хэндлер, который будет принимать обновления (ЭТО НУЖНО ДОБАВИТЬ)
-app.router.add_post(f'/{BOT_TOKEN}', dp.web_handler) 
+app.router.add_post(f'/{BOT_TOKEN}', dp.web_handler)   
+
 runner = web.AppRunner(app)
 await runner.setup()
 # *** ОБЯЗАТЕЛЬНО: указываем порт 8080 ***
 site = web.TCPSite(runner, host='0.0.0.0', port=8080) 
 await site.start() 
+await asyncio.Future()
 
 if __name__ == '__main__':
     try:
         asyncio.run(main())
     except KeyboardInterrupt:
         pass
-# # 4. Запуск веб-сервера
+
+
 
 
 
