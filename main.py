@@ -37,13 +37,11 @@ async def main():
         format=f'[BOT] {u"%(filename)s:%(lineno)d #%(levelname)-8s [%(asctime)s] - %(name)s - %(message)s"}')
     
     logger.info("Starting bot in Webhook mode...")
-    # # Инициализация (ДОБАВИТЬ ЭТО)
-    dp = Dispatcher(bot)
+     # Инициализация
     bot = Bot(BOT_TOKEN, parse_mode=ParseMode.HTML)
-    app = web.Application() # <- Создание веб-приложения AIOHTTP                                                                                                                                                          
-    # Инициализация
     dp = Dispatcher()
-    bot = Bot(BOT_TOKEN, parse_mode=ParseMode.HTML)
+    app = web.Application() # <- Создание веб-приложения AIOHTTP                                                                                                                                                          
+
     
     # Регистрация роутеров и базы данных (как было)
     dp.include_routers(client_router, admin_router)
@@ -52,8 +50,8 @@ async def main():
     # 1. Регистрация функции установки Webhook
     dp.startup.register(on_startup) 
     # Хэндлер, который будет принимать обновления (ЭТО НУЖНО ДОБАВИТЬ)
-    app.router.add_post(f'/{BOT_TOKEN}', dp.web_handler)   
-    
+    app.router.add_post(f'/{BOT_TOKEN}', dp.web_handler) 
+    await bot.delete_webhook(drop_pending_updates=True) # <-- ОЧИСТКА WEBHOOK
     runner = web.AppRunner(app)
     await runner.setup()
     # *** ОБЯЗАТЕЛЬНО: указываем порт 8080 ***
@@ -66,6 +64,7 @@ if __name__ == '__main__':
         asyncio.run(main())
     except KeyboardInterrupt:
         pass # Или logger.warning("...")
+
 
 
 
