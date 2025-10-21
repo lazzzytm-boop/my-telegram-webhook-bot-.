@@ -31,43 +31,38 @@ async def on_startup(bot: Bot):
     )
     logger.info(f"Webhook set to: {APP_URL}/webhook")
 
-async def main():
-    logging.basicConfig(
-        level=logging.INFO,
-        format=f'[BOT] {u"%(filename)s:%(lineno)d #%(levelname)-8s [%(asctime)s] - %(name)s - %(message)s"}')
-    
-    logger.info("Starting bot in Webhook mode...")
-     # Инициализация
-    bot = Bot(BOT_TOKEN)
-    dp = Dispatcher()
-    app = web.Application() # <- Создание веб-приложения AIOHTTP                                                                                                                                                          
+async def main(): 
 
-    
-    # Регистрация роутеров и базы данных (как было)
+    # 1. Инициализация
+    bot = Bot(BOT_TOKEN) 
+    dp = Dispatcher() # <--- Обход TypeError
+    app = web.Application()
+
+    # 2. Регистрация роутеров
     dp.include_routers(client_router, admin_router)
-    dp.startup.register(DataBase.on_startup)
-    
-    
-    # 1. Регистрация функции установки Webhook
+    dp.startup.register(Database.on_startup)
     dp.startup.register(on_startup) 
-    
-    # Хэндлер, который будет принимать обновления (ЭТО НУЖНО ДОБАВИТЬ)
-    app.router.add_post(f'/{BOT_TOKEN}', dp.get_updates_handler()                   
-    await bot.delete_webhook(drop_pending_updates=True) # <-- ОЧИСТКА WEBHOOK
-    
+
+    # 3. Настройка Webhook
+    app.router.add_post(f'/{BOT_TOKEN}', dp.get_updates_handler()) # <--- Обход AttributeError
+    await bot.delete_webhook(drop_pending_updates=True) # <--- Очистка Webhook
+
+    # 4. Запуск веб-сервера
     runner = web.AppRunner(app)
     await runner.setup()
-    # *** ОБЯЗАТЕЛЬНО: указываем порт 8080 ***
-    site = web.TCPSite(runner, host='0.0.0.0', port=8080)
-    await site.start() 
-    await asyncio.Future()
     
+    site = web.TCPSite(runner, host='0.0.0.0', port=8080)
+    await site.start()
+    await asyncio.Future()
+
+# СИНХРОННЫЙ БЛОК ЗАПУСКА (БЕЗ ОТСТУПА)
 if __name__ == '__main__':
     try:
         asyncio.run(main())
     except KeyboardInterrupt:
         pass
-    # Или logger.warning("...")
+                                                                                                                                              # Или logger.warning("...")
+
 
 
 
