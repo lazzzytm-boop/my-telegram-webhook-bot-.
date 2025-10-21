@@ -57,12 +57,14 @@ if __name__ == '__main__':
     try:
         asyncio.run(main())
     except KeyboardInterrupt:
+        pass
 # # 4. Запуск веб-сервера
 runner = web.AppRunner(app)
 await runner.setup()
 # *** ОБЯЗАТЕЛЬНО: указываем порт 8080 ***
 site = web.TCPSite(runner, host='0.0.0.0', port=8080) 
 await site.start() 
+
 
 
 
