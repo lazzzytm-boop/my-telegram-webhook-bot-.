@@ -37,7 +37,7 @@ async def main(): # <--- НАЧАЛО ФУНКЦИИ (БЕЗ ОТСТУПА)
     # logging.basicConfig(...) 
     # logger.info("Starting bot in Webhook mode...") 
 
-    # 41 # 1. Инициализация (ДОЛЖНА ИМЕТЬ ОДИНАКОВЫЙ ОТСТУП)
+    # 1. Инициализация (ДОЛЖНА ИМЕТЬ ОДИНАКОВЫЙ ОТСТУП)
     bot = Bot(BOT_TOKEN) # <--- УДАЛИЛИ parse_mode=ParseMode.HTML
     dp = Dispatcher() # <--- Используем Dispatcher() для обхода TypeError
     app = web.Application()
@@ -47,12 +47,12 @@ async def main(): # <--- НАЧАЛО ФУНКЦИИ (БЕЗ ОТСТУПА)
     dp.startup.register(Database.on_startup)
     dp.startup.register(on_startup) 
 
-    # 53 # Настройка Webhook-хендлера и очистка
+    # Настройка Webhook-хендлера и очистка
     app.router.add_post(f'/{BOT_TOKEN}', dp.get_updates_handler()) # <--- Используем get_updates_handler
     
     await bot.delete_webhook(drop_pending_updates=True) # <--- Очистка Webhook
     
-    # 58 # 3. Запуск веб-сервера
+    # 3. Запуск веб-сервера
     runner = web.AppRunner(app)
     await runner.setup()
     
@@ -60,13 +60,14 @@ async def main(): # <--- НАЧАЛО ФУНКЦИИ (БЕЗ ОТСТУПА)
     await site.start()
     await asyncio.Future()
 
-# 66 # СИНХРОННЫЙ БЛОК ЗАПУСКА (ОБЯЗАТЕЛЬНО БЕЗ ОТСТУПА)
+# СИНХРОННЫЙ БЛОК ЗАПУСКА (ОБЯЗАТЕЛЬНО БЕЗ ОТСТУПА)
 if __name__ == '__main__':
     try:
         asyncio.run(main())
     except KeyboardInterrupt:
         pass
     # ... (или ваш logger.warning)
+
 
 
 
