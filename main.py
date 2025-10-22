@@ -9,7 +9,7 @@ from aiogram.enums import ParseMode
 from config import BOT_TOKEN, APP_URL  # <--- Добавили импорт APP_URL
 from handlers.client import router as client_router
 from handlers.admin import router as admin_router
-from database.db import DataBase
+from database.db import DB as Database # <--- ИМПОРТИРУЕМ DB, НО НАЗЫВАЕМ ЕГО Database
 # # 2. Создание веб-приложения для приёма POST-запросов от Telegram
 app = web.Application()  # ⬅️ Теперь Gunicorn его видит!
 
@@ -67,6 +67,7 @@ if __name__ == '__main__':
     except KeyboardInterrupt:
         pass
     # ... (или ваш logger.warning)
+
 
 
 
