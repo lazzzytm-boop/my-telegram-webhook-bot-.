@@ -48,7 +48,7 @@ async def main(): # <--- НАЧАЛО ФУНКЦИИ (БЕЗ ОТСТУПА)
     dp.startup.register(on_startup) 
 
     # Настройка Webhook-хендлера и очистка
-    app.router.add_post(f'/{BOT_TOKEN}', dp)
+    app.router.add_post(f'/{BOT_TOKEN}', dp.web_handler)
     
     await bot.delete_webhook(drop_pending_updates=True) # <--- Очистка Webhook
     
@@ -67,6 +67,7 @@ if __name__ == '__main__':
     except KeyboardInterrupt:
         pass
     # ... (или ваш logger.warning)
+
 
 
 
