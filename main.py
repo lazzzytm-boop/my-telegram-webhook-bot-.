@@ -38,7 +38,7 @@ async def main(): # <--- НАЧАЛО ФУНКЦИИ (БЕЗ ОТСТУПА)
     # logger.info("Starting bot in Webhook mode...") 
 
     # 1. Инициализация (ДОЛЖНА ИМЕТЬ ОДИНАКОВЫЙ ОТСТУП)
-    bot = Bot(BOT_TOKEN) # <--- УДАЛИЛИ parse_mode=ParseMode.HTML
+    bot = Bot(BOT_TOKEN) # <--- УДАЛИЛИ 
     dp = Dispatcher() # <--- Используем Dispatcher() для обхода TypeError
     app = web.Application()
 
@@ -67,6 +67,7 @@ if __name__ == '__main__':
     except KeyboardInterrupt:
         pass
     # ... (или ваш logger.warning)
+
 
 
 
