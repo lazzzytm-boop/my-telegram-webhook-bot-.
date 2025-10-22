@@ -57,17 +57,28 @@ async def main(): # <--- НАЧАЛО ФУНКЦИИ (БЕЗ ОТСТУПА)
     runner = web.AppRunner(app)
     await runner.setup()
     
-    site = web.TCPSite(runner, host='0.0.0.0', port=8080) # Порт 8080
+    PORT = os.environ.get("PORT", 8080) # Используем 8080 как запасной, если что-то пойдет не так
+    site = web.TCPSite(runner, host='0.0.0.0', port=PORT)
     await site.start()
     await asyncio.Future()
 
 # СИНХРОННЫЙ БЛОК ЗАПУСКА (ОБЯЗАТЕЛЬНО БЕЗ ОТСТУПА)
 if __name__ == '__main__':
+    # Импортируем asyncio только здесь, если он не импортирован выше
+    # import asyncio
     try:
-        asyncio.run(main())
+        # УБЕДИТЕСЬ, ЧТО ИМПОРТИРУЕТСЯ ВЕРСИЯ БЕЗ АРГУМЕНТА (main)
+        # async.run(main()) - ВАШ КОД ИЗ СТАРОГО ЛОГА
+        
+        # Лучше использовать asyncio.run(main())
+        asyncio.run(main()) 
     except KeyboardInterrupt:
+        # Ваш обработчик прерывания
         pass
-    # ... (или ваш logger.warning)
+    except Exception as e:
+        # Добавьте логирование, чтобы увидеть другие ошибки
+        # print(f"Критическая ошибка запуска: {e}") 
+        pass
 
 
 
