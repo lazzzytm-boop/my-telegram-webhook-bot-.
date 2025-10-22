@@ -39,7 +39,7 @@ async def main(): # <--- НАЧАЛО ФУНКЦИИ (БЕЗ ОТСТУПА)
 
     # 1. Инициализация (ДОЛЖНА ИМЕТЬ ОДИНАКОВЫЙ ОТСТУП)
     bot = Bot(BOT_TOKEN) # <--- УДАЛИЛИ 
-    dp = Dispatcher() # <--- Используем Dispatcher() для обхода TypeError
+    dp = Dispatcher(bot) # <--- Используем Dispatcher() для обхода TypeError
     app = web.Application()
 
     # 46 # 2. Регистрация роутеров и Webhook
@@ -49,6 +49,7 @@ async def main(): # <--- НАЧАЛО ФУНКЦИИ (БЕЗ ОТСТУПА)
 
     # Настройка Webhook-хендлера и очистка
     app.router.add_post(f'/{BOT_TOKEN}', dp.web_handler)
+    app.on_startup.append(on_startup)
     
     await bot.delete_webhook(drop_pending_updates=True) # <--- Очистка Webhook
     
@@ -67,6 +68,7 @@ if __name__ == '__main__':
     except KeyboardInterrupt:
         pass
     # ... (или ваш logger.warning)
+
 
 
 
