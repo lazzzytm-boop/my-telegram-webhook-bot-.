@@ -4,7 +4,7 @@ import os
 from aiohttp import web # Обязательно для web.Application
 
 from aiogram import Dispatcher, Bot
-from aiogram.enums import ParseMode
+from aiogram.types import ParseMode
 
 from config import BOT_TOKEN, APP_URL  # <--- Добавили импорт APP_URL
 from handlers.client import router as client_router
@@ -67,6 +67,7 @@ if __name__ == '__main__':
     except KeyboardInterrupt:
         pass
     # ... (или ваш logger.warning)
+
 
 
 
